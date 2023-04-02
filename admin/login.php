@@ -1,3 +1,47 @@
+<?php 
+include_once('../lib/session.php');
+include_once('../lib/database.php');
+$db = new Database();
+Session::init();
+
+$email = $password = $email_err = $password_err = $message =  '';
+
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
+
+    if ($_POST['email'] != '') {
+      $email = $db->verify($_POST['email']);
+    }else{
+      $email_err = "Email Field is required";
+    }
+  
+  
+    if ($_POST['password'] != '') {
+      $password = $db->verify(md5($_POST['password']));
+    }else{
+      $password_err = "password Field is required";
+    }
+  
+  
+    if ($email && $password ) {
+      
+        $sql = "SELECT * FROM user WHERE email = '$email' AND password = '$password'";
+        $result_list = $db->select($sql);
+
+        if ($result_list) {
+            $row = mysqli_fetch_assoc($result_list);
+
+            header('Location: index.php');
+        }else{
+            $message = 'Login failed';
+        }
+    }
+  
+  
+  
+  }
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -44,29 +88,23 @@
                                 <img src="images/icon/logo.png" alt="CoolAdmin">
                             </a>
                         </div>
+
+                        <small class='text-danger'><?php echo $message ?></small>
+
                         <div class="login-form">
                             <form action="" method="post">
                                 <div class="form-group">
                                     <label>Email Address</label>
-                                    <input class="au-input au-input--full" type="email" name="email" placeholder="Email">
+                                    <input value='<?php echo $email ?>' class="au-input au-input--full" type="email" name="email" placeholder="Email">
+                                    <small class='text-danger'><?php echo $email_err ?></small>
                                 </div>
                                 <div class="form-group">
                                     <label>Password</label>
                                     <input class="au-input au-input--full" type="password" name="password" placeholder="Password">
-                                </div>
-                                <div class="login-checkbox">
-                                    <label>
-                                        <input type="checkbox" name="remember">Remember Me
-                                    </label>
+                                    <small class='text-danger'><?php echo $password_err ?></small>
                                 </div>
                                 <button class="au-btn au-btn--block au-btn--green m-b-20" type="submit">sign in</button>
                             </form>
-                            <div class="register-link">
-                                <p>
-                                    Don't you have account?
-                                    <a href="register.php">Sign Up Here</a>
-                                </p>
-                            </div>
                         </div>
                     </div>
                 </div>

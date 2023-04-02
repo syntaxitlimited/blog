@@ -1,4 +1,8 @@
+<?php 
 
+include_once('../lib/database.php')
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
