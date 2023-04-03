@@ -2,7 +2,8 @@
 include_once('../lib/session.php');
 include_once('../lib/database.php');
 $db = new Database();
-Session::init();
+Session::CheckLogin();
+// Session::init();
 
 $email = $password = $email_err = $password_err = $message =  '';
 
@@ -29,9 +30,16 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
         if ($result_list) {
             $row = mysqli_fetch_assoc($result_list);
-
+            
+            Session::set('login', true);
+            Session::set('name', $row['name']);
+            Session::set('id', $row['id']);
+            Session::set('email', $row['email']);
             header('Location: index.php');
+
+
         }else{
+            Session::set('login', false);
             $message = 'Login failed';
         }
     }

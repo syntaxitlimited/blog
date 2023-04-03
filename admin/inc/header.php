@@ -1,6 +1,9 @@
 <?php 
 
-include_once('../lib/database.php')
+include_once('../lib/database.php');
+include_once('../lib/session.php');
+$db = new Database();
+Session::CheckSession();
 
 ?>
 <!DOCTYPE html>

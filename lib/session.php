@@ -13,11 +13,37 @@ class Session{
    
     
     public static function get($key){
-        if($_SESSION[$key]){
+        if(isset($_SESSION[$key])){
             return $_SESSION[$key];
         }else{
             return false;
         }
+    }
+
+    
+    
+    public static function CheckSession(){
+        self::init();
+        if(self::get('login') == false){
+            self::destroy();
+            header('Location: login.php');
+        }
+    }
+
+     
+    public static function CheckLogin(){
+        self::init();
+        if(self::get('login') == true){
+            header('Location: index.php');
+        }
+    }
+
+     
+    public static function destroy(){
+        self::init();
+        session_destroy();
+        header('Location: login.php');
+
     }
    
 
