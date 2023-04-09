@@ -2,7 +2,9 @@
 
 include_once('../lib/database.php');
 include_once('../lib/session.php');
+include_once('../lib/helper.php');
 $db = new Database();
+$hp = new Helper();
 Session::CheckSession();
 
 ?>
@@ -40,6 +42,8 @@ Session::CheckSession();
 
     <!-- Main CSS-->
     <link href="css/theme.css" rel="stylesheet" media="all">
+
+    <script src="https://cdn.ckeditor.com/4.21.0/standard/ckeditor.js"></script>
 
 </head>
 

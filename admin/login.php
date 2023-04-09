@@ -37,7 +37,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             Session::set('email', $row['email']);
             header('Location: index.php');
 
-
         }else{
             Session::set('login', false);
             $message = 'Login failed';
