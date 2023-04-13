@@ -9,22 +9,24 @@ if (isset($_GET['id'])) {
 
     $del_id = $_GET['id'];
     
-    $sql_del = "DELETE FROM categories WHERE id = '$del_id'";
+    $sql_del = "DELETE FROM posts WHERE id = '$del_id'";
     $result_del = $db->delete($sql_del);
     
     if ($result_del) {
-        Session::set('message' , 'Category Delete Success');
+        Session::set('message' , 'Post Delete Success');
     } else{
-        Session::set('message' , 'Category Delete failed');
+        Session::set('message' , 'Post Delete failed');
     }
     
 }
 
+$sql = "SELECT posts.*, categories.name,categories.id as cid , posts.id as pid 
+FROM posts
+INNER JOIN categories ON posts.category_id = categories.id";
 
-$sql = "SELECT * FROM categories";
 $result_list = $db->select($sql);
-
-
+// var_dump($result_list);
+// die();
 ?>
         
         <!-- PAGE CONTAINER-->
@@ -56,8 +58,8 @@ $result_list = $db->select($sql);
 
                                 <div class="overview-wrap">
                                     <h2 class="title-1">overview</h2>
-                                    <a href='add_category.php' class="text-light au-btn au-btn-icon au-btn--blue">
-                                        <i class="zmdi zmdi-plus"></i>Add Category</a>
+                                    <a href='add_post.php' class="text-light au-btn au-btn-icon au-btn--blue">
+                                        <i class="zmdi zmdi-plus"></i>Add Post</a>
                                 </div>
                             </div>
                         </div>
@@ -71,7 +73,9 @@ $result_list = $db->select($sql);
                                             <tr>
                                                 <th>#</th>
                                                 <th>date</th>
-                                                <th>Name</th>
+                                                <th>Title</th>
+                                                <th>Category</th>
+                                                <th>Photo</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
@@ -89,11 +93,16 @@ $result_list = $db->select($sql);
                                             <tr>
                                                 <td><?php echo $i ?></td>
                                                 <td><?php echo $row['created_at'] ?></td>
+                                                <td><?php echo $row['title'] ?></td>
                                                 <td><?php echo $row['name'] ?></td>
+                                                <td>
+                                                    <img src="<?php echo $row['photo'] ?>" width='120' height='80' alt="">
+                                                </td>
+
                                                 <td><?php echo $row['status'] ?></td>
                                                 <td>
-                                                    <a class='btn btn-warning' href="edit.php?id=<?php echo $row['id'] ?>">Edit</a>
-                                                    <a onclick="return confirm('are you sure?') " class='btn btn-danger' href="?id=<?php echo $row['id'] ?>">Delete</a>
+                                                    <a class='btn btn-warning' href="edit.php?id=<?php echo $row['pid'] ?>">Edit</a>
+                                                    <a onclick="return confirm('are you sure?') " class='btn btn-danger' href="?id=<?php echo $row['pid'] ?>">Delete</a>
                                                 </td>
                                             </tr>
                                             <?php }} ?>

@@ -1,3 +1,13 @@
+<?php 
+
+include_once('lib/database.php');
+include_once('lib/session.php');
+include_once('lib/helper.php');
+$db = new Database();
+$hp = new Helper();
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 

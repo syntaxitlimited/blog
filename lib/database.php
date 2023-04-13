@@ -36,10 +36,20 @@ class Database{
     }
 
 
-    public function select($data){
+    public function delete($data){
         $data = $this->conn->query($data);
 
+        if($data){
+            return $data;
+        }else{
+            return false;
+        }
         
+    }
+
+
+    public function select($data){
+        $data = $this->conn->query($data);
 
         if($data){
             if(mysqli_num_rows($data) > 0){
