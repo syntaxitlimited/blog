@@ -20,13 +20,11 @@ $result_list = $db->select($sql);
 
                       <?php 
                         if ($result_list) {
-                            $i = 0;
                             while ($row = mysqli_fetch_assoc($result_list)) { 
-                                $i++;
                         ?>
 
 
-                        <li><a href="post-details.html">
+                        <li><a href="post-details.php?slug=<?php echo $row['slug'] ?>">
                           <h5><?php echo $row['title'] ?></h5>
                           <span><?php echo $hp->format_date($row['created_at']);  ?></span>
                         </a></li>
@@ -34,7 +32,7 @@ $result_list = $db->select($sql);
                       </ul>
                     </div>
                   </div>
-                </div>
+                </div>              
                 <div class="col-lg-12">
                   <div class="sidebar-item categories">
                     <div class="sidebar-heading">
@@ -42,33 +40,18 @@ $result_list = $db->select($sql);
                     </div>
                     <div class="content">
                       <ul>
-                        <li><a href="#">- Nature Lifestyle</a></li>
-                        <li><a href="#">- Awesome Layouts</a></li>
-                        <li><a href="#">- Creative Ideas</a></li>
-                        <li><a href="#">- Responsive Templates</a></li>
-                        <li><a href="#">- HTML5 / CSS3 Templates</a></li>
-                        <li><a href="#">- Creative &amp; Unique</a></li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg-12">
-                  <div class="sidebar-item tags">
-                    <div class="sidebar-heading">
-                      <h2>Tag Clouds</h2>
-                    </div>
-                    <div class="content">
-                      <ul>
-                        <li><a href="#">Lifestyle</a></li>
-                        <li><a href="#">Creative</a></li>
-                        <li><a href="#">HTML5</a></li>
-                        <li><a href="#">Inspiration</a></li>
-                        <li><a href="#">Motivation</a></li>
-                        <li><a href="#">PSD</a></li>
-                        <li><a href="#">Responsive</a></li>
+                      <?php 
+                      $sql = "SELECT * FROM categories";
+                      $result_list = $db->select($sql);
+                        if ($result_list) {
+                            while ($category = mysqli_fetch_assoc($result_list)) { 
+                        ?>
+                        <li><a href="category-posts.php?id=<?php echo $category['id'] ?>">- <?php echo $category['name'] ?></a></li>
+                        <?php }} ?>
                       </ul>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+            

@@ -1,12 +1,15 @@
 <?php include_once('inc/header.php'); ?>
 
-
 <?php 
-$sql = "SELECT posts.*, categories.name,categories.id as cid , posts.id as pid 
-FROM posts
-INNER JOIN categories ON posts.category_id = categories.id  ORDER BY posts.id DESC LIMIT 6";
+if ($_GET['id']) {
+    $cat_id = $_GET['id'];
+    $sql = "SELECT posts.*, categories.name,categories.id as cid , posts.id as pid 
+            FROM posts
+            INNER JOIN categories ON posts.category_id = categories.id WHERE  posts.category_id = '$cat_id'  ORDER BY posts.id DESC LIMIT 6";
 
 $result_list = $db->select($sql);
+}
+
 
 
 
